@@ -1,0 +1,29 @@
+name: vaccinenotifier
+recipe: laravel
+config:
+  webroot: public
+  xdebug: true
+  cache: redis
+  php: '8.0'
+proxy:
+  mailhog:
+    - mail.vaccinenotifier.lndo.site
+services:
+  cache:
+    portforward: 33333
+  database:
+    portforward: 36666
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+    portforward: true
+tooling:
+  phpunit:
+    service: appserver
+    cmd: "/app/vendor/bin/phpunit"
+    env:
+      XDEBUG_MODE: coverage
+  phpstan:
+    service: appserver
+    cmd: "/app/vendor/bin/phpstan"
