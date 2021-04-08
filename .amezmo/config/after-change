@@ -1,4 +1,6 @@
 #!/bin/bash
 
+# Cache the new changes
 php artisan config:cache;
-
+# Rebuild dependencies so Vue can get any needed changes.
+npm run prod
