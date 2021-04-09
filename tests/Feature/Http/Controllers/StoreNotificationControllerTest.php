@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Zipcode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,6 +17,7 @@ class StoreNotificationControllerTest extends TestCase
     {
 
         $user = User::factory()->create();
+        $zip = Zipcode::factory()->create(['zipcode' => 29624]);
         $data = [
             'zip' => 29624,
             'radius' => 50,
