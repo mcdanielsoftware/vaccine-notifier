@@ -32,7 +32,7 @@
             </a>
           </div>
         </div>
-        <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
+        <div class="md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
           <span class="inline-flex rounded-md shadow">
             <a v-if="canLogin" :href="route('login')" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
               Log in
