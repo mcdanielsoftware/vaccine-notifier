@@ -4,17 +4,18 @@ namespace App\Jobs;
 
 use App\Models\Site;
 use Carbon\Carbon;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StateImportJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable;
 
     public const DOMAIN = 'states';
     public string $url;
@@ -26,7 +27,6 @@ class StateImportJob implements ShouldQueue
         }
 
         $this->url = sprintf('%s%s', config('vaccine-notifier.api_url'), self::DOMAIN);
-        $this->state = $state;
     }
 
     public function handle(): void
@@ -36,10 +36,10 @@ class StateImportJob implements ShouldQueue
         try {
             $stateData = json_decode(file_get_contents($url));
         } catch (\Exception $e) {
-            \Log::critical(sprintf('Import for %s failed using URL %s', $this->state, $url));
-            \Log::critical($e->getMessage());
+            Log::critical(sprintf('Import for %s failed using URL %s', $this->state, $url));
+            Log::critical($e->getMessage());
         }
-        
+
         foreach ($stateData->features as $location) {
             if (!$location->properties->postal_code) {
                 continue;

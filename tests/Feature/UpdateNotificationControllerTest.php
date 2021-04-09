@@ -26,6 +26,8 @@ class UpdateNotificationControllerTest extends TestCase
             'user_id' => $user->id,
             'zip' => '29624',
             'radius' => 25,
+            'lat' => 35,
+            'long' => 35,
         ]);
         $updates = [
             'zip' => '21703',
@@ -50,6 +52,8 @@ class UpdateNotificationControllerTest extends TestCase
             'user_id' => $user2->id,
             'zip' => '29624',
             'radius' => 25,
+            'lat' => 35,
+            'long' => 100,
         ]);
         $updates = [
             'zip' => '21703',

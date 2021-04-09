@@ -26,5 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::post('/notification', StoreNotificationController::class)->name('notification.store');
     Route::delete('/notification/{notification}', DeleteNotificationController::class)->name('notification.delete');
     Route::put('/notification/{notification}', UpdateNotificationController::class)->name('notification.update');
-
 });
+
