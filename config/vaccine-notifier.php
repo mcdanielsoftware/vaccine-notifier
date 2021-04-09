@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'api_url' => env('VACCINE_SPOTTER_URL', false),
     'states' => [
         "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
         "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
