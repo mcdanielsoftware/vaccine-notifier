@@ -132,6 +132,32 @@
               placeholder="555-555-5555"
             />
           </div>
+          <label for="zip" class="block text-sm font-medium text-gray-700 mt-2"
+            >Zip Code</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="zip"
+              id="zip"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              placeholder="12345"
+            />
+          </div>
+          <label for="distance" class="block text-sm font-medium text-gray-700"
+            >Distance</label
+          >
+
+          <select
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+            name="distance"
+            id="distance"
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
           <div>
             <button
               type="button"
@@ -179,8 +205,8 @@ export default {
     },
 
     closeForm() {
-        this.formOpened = false;
-        this.notificationSubmitted = false;
+      this.formOpened = false;
+      this.notificationSubmitted = false;
     },
 
     submitNotification() {
