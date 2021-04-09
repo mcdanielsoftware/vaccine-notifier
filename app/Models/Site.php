@@ -11,6 +11,12 @@ class Site extends Model
 
     protected $guarded = false;
 
+    public const MILES_PER_METER = 0.000621371;
+
+    public const METERS_PER_MILE = 1609.34;
+
+
+
     protected $casts = [
       'appointments_last_fetched' => 'datetime',
         'appointments_last_modified' => 'datetime',
@@ -18,4 +24,20 @@ class Site extends Model
         'appointment_types' => 'json',
         'appointment_vaccine_types' => 'json',
     ];
+
+    public function scopeWhereWithinDistance($query, $long, $lat, $distanceInMiles)
+    {
+
+        $radiusInMeters = $distanceInMiles * self::METERS_PER_MILE;
+
+        $query->whereRaw('ST_Distance_Sphere(
+            Point(sites.long, sites.lat),
+            Point(?, ?)
+        ) <= ?', [$long, $lat, $radiusInMeters]);
+    }
+
+    public function getDistanceAttribute($value)
+    {
+        return $value * self::MILES_PER_METER;
+    }
 }

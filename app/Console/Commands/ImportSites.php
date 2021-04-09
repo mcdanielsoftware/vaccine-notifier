@@ -2,8 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\QueryAllNotifications;
 use App\Jobs\StateImportJob;
+use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 
 class ImportSites extends Command
 {
@@ -13,10 +17,14 @@ class ImportSites extends Command
     public function handle(): void
     {
         $this->info('Starting import....');
+        $jobs = [];
         foreach (config('vaccine-notifier.states') as $state) {
             $this->info(sprintf('Dispatching job for %s sites', $state));
-            StateImportJob::dispatch($state);
+            $jobs[] = new StateImportJob($state);
         }
+        Bus::batch($jobs)->then(function (Batch $batch) {
+            QueryAllNotifications::dispatch();
+        })->dispatch();
         $this->info('All states dispatched!');
     }
 }
