@@ -11,7 +11,8 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
 
-    public function testUserCanCreateAndDeleteNotifcation(): void
+    /** @test */
+    public function it_can_create_and_delete_notifcation(): void
     {
         $numNotifications = 5;
         $notifications = Notification::factory()->forUser()->count($numNotifications)->create();
@@ -27,7 +28,8 @@ class UserTest extends TestCase
         $this->assertEquals(0, $user->notifications()->count());
     }
 
-    public function testUserCannotSaveDuplicateNotification(): void
+    /** @test */
+    public function it_cannot_create_duplicate_notifcation(): void
     {
         $notification = Notification::factory()->forUser()->create();
         
