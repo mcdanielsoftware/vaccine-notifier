@@ -13,18 +13,6 @@ class Notification extends Model
     protected $guarded = false;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'user_id',
-        'zip',
-        'radius',
-    ];
-
-
-    /**
      * Get the user that owns a notification
      */
     public function user(): BelongsTo
