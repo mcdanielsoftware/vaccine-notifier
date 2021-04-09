@@ -16,7 +16,6 @@ class DeleteNotificationControllerTest extends TestCase
     public function it_deletes_the_notification(): void
     {
 
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $notification = Notification::factory()->create(['user_id' => $user->id]);
