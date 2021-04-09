@@ -46,14 +46,14 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
+                <tr v-for="notification in user.notifications">
                   <td
                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                   >
                     555-555-5555
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    12345
+                    {{ notification.zip }}
                   </td>
                   <td
                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
@@ -199,6 +199,8 @@
 import JetApplicationLogo from "@/Jetstream/ApplicationLogo";
 import { Inertia } from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/inertia-vue3'
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
   components: {
@@ -209,9 +211,10 @@ export default {
       email: null,
       password: null,
       remember: false,
-    })
+    });
 
-    return { form }
+    const user = computed(() => usePage().props.value.auth.user);
+    return { form, user };
   },
   data: function data() {
     return {
