@@ -32,7 +32,7 @@
                     scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Number
+                    Distance(mi)
                   </th>
                   <th
                     scope="col"
@@ -50,7 +50,7 @@
                   <td
                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                   >
-                    555-555-5555
+                    {{ notification.radius }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ notification.zip }}
@@ -58,7 +58,10 @@
                   <td
                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                    <a
+                      href="#"
+                      class="text-indigo-600 hover:text-indigo-900"
+                      @click="deleteNotification(notification)"
                       >Delete</a
                     >
                   </td>
@@ -236,6 +239,10 @@ export default {
       Inertia.post(route('notification.store'), this.form).then(() => {
         this.notificationSubmitted = true;
       });
+    },
+
+    deleteNotification(notification) {
+      Inertia.delete(route('notification.delete', { id: notification.id }));
     }
   }
 };
