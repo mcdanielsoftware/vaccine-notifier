@@ -7,10 +7,10 @@ use Illuminate\Console\Command;
 
 class ImportSites extends Command
 {
-    protected string $signature = 'import:sites';
-    protected string $description = 'Imports vaccine sites for every state in the config';
+    protected $signature = 'import:sites';
+    protected $description = 'Imports vaccine sites for every state in the config';
 
-    public function handle(): int
+    public function handle(): void
     {
         $this->info('Starting import....');
         foreach (config('vaccine-notifier.states') as $state) {
