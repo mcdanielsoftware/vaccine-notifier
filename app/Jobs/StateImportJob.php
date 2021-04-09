@@ -19,11 +19,6 @@ class StateImportJob implements ShouldQueue
     public const DOMAIN = 'states';
     public string $url;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct(public string $state)
     {
         if (!config('vaccine-notifier.api_url')) {
@@ -34,12 +29,7 @@ class StateImportJob implements ShouldQueue
         $this->state = $state;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(): void
     {
         $url = sprintf('%s/%s.json', $this->url, $this->state);
 

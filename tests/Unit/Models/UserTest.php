@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-
     /** @test */
     public function it_can_create_and_delete_notifcation(): void
     {

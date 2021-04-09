@@ -12,7 +12,7 @@ use Tests\TestCase;
 class ImportSitesCommandTest extends TestCase
 {
     /** @test */
-    public function it_import_sites_dispatches_jobs(): void
+    public function it_dispatches_state_import_job_for_each_state(): void
     {
         Queue::fake();
 
