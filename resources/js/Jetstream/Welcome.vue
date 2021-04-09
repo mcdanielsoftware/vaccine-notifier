@@ -119,7 +119,7 @@
       <div
         class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
       >
-        <div>
+        <div v-if="!notificationSubmitted">
           <label for="phone" class="block text-sm font-medium text-gray-700"
             >Phone Number</label
           >
@@ -136,16 +136,21 @@
             <button
               type="button"
               class="mt-2 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              @click="submitNotification()"
             >
               Add Notification
             </button>
           </div>
         </div>
+        <div v-if="notificationSubmitted">
+          You are now subscribed. You will receive a text when vaccine
+          appointments are nearby.
+        </div>
         <div class="mt-5 sm:mt-6">
           <button
             type="button"
             class="mt-4 inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-            @click="formOpened = false"
+            @click="closeForm()"
           >
             Go back to dashboard
           </button>
@@ -165,11 +170,21 @@ export default {
   data: function data() {
     return {
       formOpened: false,
+      notificationSubmitted: false,
     };
   },
   methods: {
     openForm() {
       this.formOpened = true;
+    },
+
+    closeForm() {
+        this.formOpened = false;
+        this.notificationSubmitted = false;
+    },
+
+    submitNotification() {
+      this.notificationSubmitted = true;
     }
   }
 };
