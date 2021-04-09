@@ -119,55 +119,64 @@
       <div
         class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
       >
-        <div v-if="!notificationSubmitted">
-          <label for="phone" class="block text-sm font-medium text-gray-700"
-            >Phone Number</label
-          >
-          <div class="mt-1">
-            <input
-              type="text"
-              name="phone"
-              id="phone"
-              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
-              placeholder="555-555-5555"
-            />
-          </div>
-          <label for="zip" class="block text-sm font-medium text-gray-700 mt-2"
-            >Zip Code</label
-          >
-          <div class="mt-1">
-            <input
-              type="text"
-              name="zip"
-              id="zip"
-              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
-              placeholder="12345"
-            />
-          </div>
-          <label for="distance" class="block text-sm font-medium text-gray-700"
-            >Distance</label
-          >
-
-          <select
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
-            name="distance"
-            id="distance"
-          >
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-          <div>
-            <button
-              type="button"
-              class="mt-2 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              @click="submitNotification()"
+        <form @submit.prevent="submit">
+          <div v-if="!notificationSubmitted">
+            <label for="phone" class="block text-sm font-medium text-gray-700"
+              >Phone Number</label
             >
-              Add Notification
-            </button>
+            <div class="mt-1">
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                placeholder="555-555-5555"
+                v-model="form.phoneNumber"
+              />
+            </div>
+            <label
+              for="zip"
+              class="block text-sm font-medium text-gray-700 mt-2"
+              >Zip Code</label
+            >
+            <div class="mt-1">
+              <input
+                type="text"
+                name="zip"
+                id="zip"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                placeholder="12345"
+                v-model="form.zip"
+              />
+            </div>
+            <label
+              for="distance"
+              class="block text-sm font-medium text-gray-700"
+              >Distance</label
+            >
+
+            <select
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              name="distance"
+              id="distance"
+              v-model="form.radius"
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <div>
+              <button
+                type="button"
+                class="mt-2 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                @click="submitNotification()"
+              >
+                Add Notification
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
         <div v-if="notificationSubmitted">
           You are now subscribed. You will receive a text when vaccine
           appointments are nearby.
@@ -188,10 +197,21 @@
 
 <script>
 import JetApplicationLogo from "@/Jetstream/ApplicationLogo";
+import { Inertia } from '@inertiajs/inertia'
+import { useForm } from '@inertiajs/inertia-vue3'
 
 export default {
   components: {
     JetApplicationLogo,
+  },
+  setup() {
+    const form = useForm({
+      email: null,
+      password: null,
+      remember: false,
+    })
+
+    return { form }
   },
   data: function data() {
     return {
@@ -210,7 +230,9 @@ export default {
     },
 
     submitNotification() {
-      this.notificationSubmitted = true;
+      Inertia.post(route('notification.store'), this.form).then(() => {
+        this.notificationSubmitted = true;
+      });
     }
   }
 };
