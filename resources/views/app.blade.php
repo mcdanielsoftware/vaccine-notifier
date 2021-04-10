@@ -16,6 +16,8 @@
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script async defer data-domain="vaccinenotifier.app" src="https://plausible.io/js/plausible.js"></script>
+
     </head>
     <body class="font-sans antialiased">
         @inertia
