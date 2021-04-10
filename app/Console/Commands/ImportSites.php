@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Jobs\QueryAllNotifications;
 use App\Jobs\StateImportJob;
+use App\Models\Notification;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Bus;
@@ -16,6 +17,9 @@ class ImportSites extends Command
 
     public function handle(): void
     {
+        if(!Notification::count()){
+            return;
+        }
         $this->info('Starting import....');
         $jobs = [];
         foreach (config('vaccine-notifier.states') as $state) {
