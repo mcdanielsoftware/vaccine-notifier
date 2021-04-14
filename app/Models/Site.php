@@ -20,9 +20,9 @@ class Site extends Model
     protected $casts = [
       'appointments_last_fetched' => 'datetime',
         'appointments_last_modified' => 'datetime',
-        'appointments' => 'json',
-        'appointment_types' => 'json',
-        'appointment_vaccine_types' => 'json',
+        'appointments' => 'collection',
+        'appointment_types' => 'array',
+        'appointment_vaccine_types' => 'array',
     ];
 
     public function scopeWhereWithinDistance($query, $long, $lat, $distanceInMiles)

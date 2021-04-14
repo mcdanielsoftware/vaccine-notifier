@@ -18,7 +18,7 @@ class ImportSites extends Command
     public function handle(): void
     {
         if(!Notification::count()){
-            return;
+           return;
         }
         $this->info('Starting import....');
         $jobs = [];
