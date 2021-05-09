@@ -27,7 +27,7 @@ jobs:
         run: rm -rf .git/
 
       - name: Zip it all up
-        run: zip --recurse-paths ../application.zip .
+        run: zip -qr ../application.zip . && mv ../application.zip .
 
       - name: Deploy to Amezmo
         run: |
@@ -36,4 +36,4 @@ jobs:
               --header 'Authorization: Bearer ${{ secrets.AMEZMO_API_KEY }}' \
               --header 'Content-Type: multipart/form-data' \
               --form environment=production \
-              --form archive=@{../application.zip}
+              --form archive=@application.zip
