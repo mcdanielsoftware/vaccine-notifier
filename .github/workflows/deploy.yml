@@ -1,0 +1,39 @@
+name: Deploy to Staging
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.0
+
+      - name: Install PHP Dependencies
+        run: composer install --no-dev -a
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Build Frontend Dependencies
+        run: npm run prod
+
+      - name: Delete git repo
+        run: rm -rf .git/
+
+      - name: Zip it all up
+        run: zip --recurse-paths ../application.zip .
+
+      - name: Deploy to Amezmo
+        run: |
+          curl --request POST \
+              --url https://api.amezmo.com/api/sites/${{ secrets.AMEZMO_SITE_ID }}/deployments \
+              --header 'Authorization: Bearer ${{ secrets.AMEZMO_API_KEY }}' \
+              --header 'Content-Type: multipart/form-data' \
+              --form environment=production \
+              --form archive=@{../application.zip}
